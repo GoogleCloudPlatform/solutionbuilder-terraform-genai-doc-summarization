@@ -1,0 +1,1 @@
+-- Step by step guide on how to summarize a large corpus of documents using Vertex AI PaLM API.
