@@ -29,7 +29,7 @@ The `entrypoint` function in the `./webhook/main.py` gets triggered when we send
 
 The terraform code for the solution is present in the `*.tf` files in the current directory.
 
-As an example, you can edit `./webhook/main.py` and replace the value of `temperature` parameter to `0.3` in the call being made to the `predict_large_language_model` function in the `summarization_entrypoint` function.
+As an example, you can edit `./webhook/main.py` and replace the value of `temperature` parameter to `0.9` in the call being made to the `predict_large_language_model` function in the `summarization_entrypoint` function.
 
 NOTE: The changes in infrastructure may lead to reduction or increase in the incurred cost.
 
