@@ -8,9 +8,9 @@
 
 # Customize Generative AI Document Summarization Solution
 
-This tutorial provides the steps for you to build your own proof of concept solution based on the chosen Jump Start Solution (JSS) and deploy it. You can customize the chosen Jump Start Solutions (JSS) deployments by creating your own copy of the source code. You can modify the infrastructure and application code as needed and redeploy the solutions with the changes.
+This tutorial provides the steps for you to build your own proof of concept solution based on the deployed [Generative AI Document Summarization](https://console.cloud.google.com/products/solutions/details/generative-ai-document-summarization) Jump Start Solution (JSS) and deploy it. You can customize the Jump Start Solution (JSS) deployment by creating your own copy of the source code. You can modify the infrastructure and application code as needed and redeploy the solution with the changes.
 
-Each solution should be edited and deployed by one user at a time to avoid conflicts.
+The solution should be edited and deployed by one user at a time to avoid conflicts. Multiple users editing and updating the same deployment in the same GCP project can lead to conflicts.
 
 ## Know your solution
 
@@ -19,17 +19,17 @@ Here are the details of the Generative AI Document Summarization Jump Start Solu
 Solution Guide: [here](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization)
 
 The code for the solution is avaiable at the following location
-* Infrastructure code is present as part of `./main.tf`
+* Infrastructure code is present as part of <walkthrough-editor-open-file filePath="./main.tf">main.tf</walkthrough-editor-open-file>
 * The Cloud Functions webhook is present under `./webhook`
 
 
 ## Explore or Edit the solution as per your requirement
 
-The `entrypoint` function in the `./webhook/main.py` gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
+The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="81" endLine="82" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
 
 The terraform code for the solution is present in the `*.tf` files in the current directory.
 
-As an example, you can edit `./webhook/main.py` and replace the value of `temperature` parameter to `0.9` in the call being made to the `predict_large_language_model` function in the `summarization_entrypoint` function.
+As an example, you can edit <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="164" endLine="165" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> and replace the value of `temperature` parameter to `0.9` in the call being made to the `predict_large_language_model` function in the `summarization_entrypoint` function. Increasing the temperature parameter leads to more diverse responses from the model.
 
 NOTE: The changes in infrastructure may lead to reduction or increase in the incurred cost.
 
@@ -42,11 +42,10 @@ Please note: to open your recently used workspace:
 ---
 **Automated deployment**
 
-Execute the deloy.sh script if you want an automated deployment to happen without following the full tutorial.
+Execute the <walkthrough-editor-open-file filePath="./deploy_im.sh">deploy_im.sh</walkthrough-editor-open-file> script if you want an automated deployment to happen without following the full tutorial.
 This step is optional and you can continue with the full tutorial if you want to understand the individual steps involved in the script.
 
 ```bash
-chmod +x deploy_im.sh
 ./deploy_im.sh
 ```
 
@@ -121,7 +120,7 @@ done < "roles.txt"
 ---
 **Create Terraform input file**
 
-Create `input.tfvars` file.
+Create an `input.tfvars` file in the current directory.
 
 Find the sample content below and modify it by providing the respective details.
 ```
