@@ -1,87 +1,74 @@
 <walkthrough-metadata>
   <meta name="title" content="Edit Jumpstart Solution and deploy tutorial " />
-   <meta name="description" content="Make it mine neos tutorial" />
+  <meta name="description" content="Make it mine neos tutorial" />
   <meta name="component_id" content="1361081" />
-  <meta name="unlisted" content="true" />
   <meta name="short_id" content="true" />
 </walkthrough-metadata>
 
-# Customize Generative AI Document Summarization Solution
+# Customize a Generative AI Document Summarization solution
 
-This tutorial provides the steps for you to build your own proof of concept solution based on the deployed [Generative AI Document Summarization](https://console.cloud.google.com/products/solutions/details/generative-ai-document-summarization) Jump Start Solution (JSS) and deploy it. You can customize the Jump Start Solution (JSS) deployment by creating your own copy of the source code. You can modify the infrastructure and application code as needed and redeploy the solution with the changes.
+Learn how to build and deploy your own proof of concept based on the deployed [Generative AI Document Summarization](https://console.cloud.google.com/products/solutions/details/generative-ai-document-summarization) Jump Start Solution (JSS). You can customize the Jump Start Solution (JSS) deployment by creating a copy of the source code. You can modify the infrastructure and application code as needed and redeploy the solution with the changes.
 
-The solution should be edited and deployed by one user at a time to avoid conflicts. Multiple users editing and updating the same deployment in the same GCP project can lead to conflicts.
-
-## Know your solution
+To avoid conflicts, only one user should modify and deploy a solution in a single GCP project.
 
 NOTE: Open the directory where the repository is cloned as a workspace in the editor:
 * Go to the `File` menu.
 * Select `Open Workspace`.
 * Choose the directory where the repository has been cloned.
 
-Here are the details of the Generative AI Document Summarization Jump Start Solution chosen by you.
+## Details of your chosen Generative AI Document Summarization Jump Start Solution
 
-Solution Guide: [here](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization)
-
-The code for the solution is avaiable at the following location
-* Infrastructure code is present as part of <walkthrough-editor-open-file filePath="./main.tf">main.tf</walkthrough-editor-open-file>
-* The Cloud Functions webhook is present under `./webhook`
+* [Solution guide](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization)
+* The Cloud Functions webhook is present under `./webhook` directory. The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="81" endLine="82" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
+* Terraform / infrastructure code is available in the `*.tf` files.
 
 
-## Explore or Edit the solution as per your requirement
+## Edit the solution
 
-The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="81" endLine="82" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
+Edit <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="164" endLine="165" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> and replace the value of `temperature` parameter to `0.9`. Increasing the temperature parameter leads to more diverse responses from the model.
 
-The terraform code for the solution is present in the `*.tf` files in the current directory.
-
-As an example, you can edit <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="164" endLine="165" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> and replace the value of `temperature` parameter to `0.9` in the call being made to the `predict_large_language_model` function in the `summarization_entrypoint` function. Increasing the temperature parameter leads to more diverse responses from the model.
-
-NOTE: The changes in infrastructure may lead to reduction or increase in the incurred cost.
+NOTE: A change in the infrastructure code might cause a reduction or increase in the incurred cost.
 
 ---
-**Automated deployment**
+**Create an automated deployment**
 
-Execute the <walkthrough-editor-open-file filePath="./deploy_im.sh">deploy_im.sh</walkthrough-editor-open-file> script if you want an automated deployment to happen without following the full tutorial.
-This step is optional and you can continue with the full tutorial if you want to understand the individual steps involved in the script.
+(Optional step) If you want to learn individual steps involved in the script, you can skip this step and continue with the rest of the tutorial. However, if you want an automated deployment without following the full tutorial, run the <walkthrough-editor-open-file filePath="./deploy_im.sh">deploy_im.sh</walkthrough-editor-open-file> script.
 
 ```bash
 ./deploy_im.sh
 ```
 
-## Gather the required information for intializing gcloud command
-
-In this step you will gather the information required for the deployment of the solution.
+## Gather information to initialize the gcloud command
 
 ---
 **Project ID**
 
-Use the following command to see the projectId:
+Get the Project ID:
 
 ```bash
 gcloud config get project
 ```
 
 ```
-Use above output to set the <var>PROJECT_ID</var>
+Use the output to set the <var>PROJECT_ID</var>
 ```
 
 ---
-**Deployment Region**
+**Deployment region**
 
 ```
-Provide the region (e.g. us-central1) where the top level deployment resources were created for the deployment <var>REGION</var>
+For <var>REGION</var>, provide the region (e.g. us-central1) where you created the deployment resources.
 ```
 
 ---
-**Deployment Name**
+**Deployment name**
 
-Run the following command to get the existing deployment name:
 ```bash
 gcloud infra-manager deployments list --location <var>REGION</var> --filter="labels.goog-solutions-console-deployment-name:* AND labels.goog-solutions-console-solution-id:generative-ai-document-summarization"
 ```
 
 ```
-Use the NAME value of the above output to set the <var>DEPLOYMENT_NAME</var>
+Use the output value of name to set the <var>DEPLOYMENT_NAME</var>
 ```
 
 
@@ -93,9 +80,10 @@ Use the NAME value of the above output to set the <var>DEPLOYMENT_NAME</var>
 ```bash
 gcloud infra-manager deployments describe <var>DEPLOYMENT_NAME</var> --location <var>REGION</var>
 ```
-From the output of this command, note down the input values provided in the existing deployment in the `terraformBlueprint.inputValues` section.
+From the output, note down the following:
+* The values of the existing deployment available in the `terraformBlueprint.inputValues` section.
+* The service account. It is of the following form:
 
-Also note the serviceAccount from the output of this command. The value of this field is of the form
 ```
 projects/<var>PROJECT_ID</var>/serviceAccounts/<service-account>@<var>PROJECT_ID</var>.iam.gserviceaccount.com
 ```
@@ -117,11 +105,10 @@ done < "roles.txt"
 ```
 
 ---
-**Create Terraform input file**
+**Create a terraform input file**
 
-Create an `input.tfvars` file in the current directory.
+Create an `input.tfvars` file in the current directory with the following contents:
 
-Find the sample content below and modify it by providing the respective details.
 ```
 region="us-central1"
 project_id = "<var>PROJECT_ID</var>"
@@ -139,15 +126,15 @@ labels = {
 ---
 **Deploy the solution**
 
-Execute the following command to trigger the re-deployment.
+Trigger the re-deployment.
 ```bash
 gcloud infra-manager deployments apply projects/<var>PROJECT_ID</var>/locations/<var>REGION</var>/deployments/<var>DEPLOYMENT_NAME</var> --service-account projects/<var>PROJECT_ID</var>/serviceAccounts/<var>SERVICE_ACCOUNT</var>@<var>PROJECT_ID</var>.iam.gserviceaccount.com --local-source="."     --inputs-file=./input.tfvars --labels="modification-reason=make-it-mine,goog-solutions-console-deployment-name=<var>DEPLOYMENT_NAME</var>,goog-solutions-console-solution-id=generative-ai-document-summarization,goog-config-partner=sc"
 ```
 
 ---
-**Monitor the Deployment**
+**Monitor the deployment**
 
-Execute the following command to get the deployment details.
+Get the deployment details.
 
 ```bash
 gcloud infra-manager deployments describe <var>DEPLOYMENT_NAME</var> --location <var>REGION</var>
@@ -160,16 +147,17 @@ Monitor your deployment at [JSS deployment page](https://console.cloud.google.co
 Use any of the following methods to save your edits to the solution
 
 ---
-**Download your solution in tar file**
-* Click on the `File` menu
-* Select `Download Workspace` to download the whole workspace on your local in compressed format.
+**Download the solution**
+
+To download your solution, in the `File` menu, select `Download Workspace`. The solution is downloaded in a compressed format.
+
 
 ---
-**Save your solution to your git repository**
+**Save the solution to your Git repository**
 
-Set the remote url to your own repository
+Set the remote url to your Git repository
 ```bash 
-git remote set-url origin [your-own-repo-url]
+git remote set-url origin [git-repo-url]
 ```
 
 Review the modified files, commit and push to your remote repository branch.
