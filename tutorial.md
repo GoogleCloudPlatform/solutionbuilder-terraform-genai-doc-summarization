@@ -14,6 +14,11 @@ The solution should be edited and deployed by one user at a time to avoid confli
 
 ## Know your solution
 
+NOTE: Open the directory where the repository is cloned as a workspace in the editor:
+* Go to the `File` menu.
+* Select `Open Workspace`.
+* Choose the directory where the repository has been cloned.
+
 Here are the details of the Generative AI Document Summarization Jump Start Solution chosen by you.
 
 Solution Guide: [here](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization)
@@ -32,12 +37,6 @@ The terraform code for the solution is present in the `*.tf` files in the curren
 As an example, you can edit <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="164" endLine="165" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> and replace the value of `temperature` parameter to `0.9` in the call being made to the `predict_large_language_model` function in the `summarization_entrypoint` function. Increasing the temperature parameter leads to more diverse responses from the model.
 
 NOTE: The changes in infrastructure may lead to reduction or increase in the incurred cost.
-
-Please note: to open your recently used workspace:
-* Go to the `File` menu.
-* Select `Open Recent Workspace`.
-* Choose the desired workspace.
-
 
 ---
 **Automated deployment**
