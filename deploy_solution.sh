@@ -12,6 +12,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+set -o pipefail
+
+handle_error() {
+    local exit_code=$?
+    exit $exit_code
+}
+trap 'handle_error' ERR
 
 echo "Fetching Project ID"
 PROJECT_ID=$(gcloud config get project)

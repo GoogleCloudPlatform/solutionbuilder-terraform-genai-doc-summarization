@@ -11,10 +11,12 @@ Learn how to build and deploy your own proof of concept based on the deployed [G
 
 To avoid conflicts, only one user should modify and deploy a solution in a single GCP project.
 
-NOTE: Open the directory where the repository is cloned as a workspace in the editor:
+## Open cloned repository as workspace
+
+Open the directory where the repository is cloned as a workspace in the editor:
 * Go to the `File` menu.
 * Select `Open Workspace`.
-* Choose the directory where the repository has been cloned.
+* Choose the directory where the repository has been cloned. This directory is the current directory in the cloud shell terminal.
 
 ## Details of your chosen Generative AI Document Summarization Jump Start Solution
 
@@ -35,7 +37,7 @@ NOTE: A change in the infrastructure code might cause a reduction or increase in
 (Optional step) If you want to learn individual steps involved in the script, you can skip this step and continue with the rest of the tutorial. However, if you want an automated deployment without following the full tutorial, run the <walkthrough-editor-open-file filePath="./deploy_im.sh">deploy_im.sh</walkthrough-editor-open-file> script.
 
 ```bash
-./deploy_im.sh
+./deploy_solution.sh
 ```
 
 ## Gather information to initialize the gcloud command
@@ -90,7 +92,7 @@ projects/<var>PROJECT_ID</var>/serviceAccounts/<service-account>@<var>PROJECT_ID
 
 ```
 Note <service-account> part and set the <var>SERVICE_ACCOUNT</var> value.
-You can also set it to any exising service account.
+You can also set it to any existing service account.
 ```
 
 ---
