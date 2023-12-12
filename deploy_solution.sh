@@ -41,6 +41,9 @@ if [ -n "$NEW_SERVICE_ACCOUNT" ]; then
 fi
 
 echo "Assigning required roles to the service account ${SERVICE_ACCOUNT}"
+# Iterate over the roles and check if the service account already has that role
+# assigned. If it has then skip adding that policy binding as using
+# --condition=None can overwrite any existing conditions in the binding.
 CURRENT_POLICY=$(gcloud projects get-iam-policy ${PROJECT_ID} --format=json)
 MEMBER="serviceAccount:${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com"
 
