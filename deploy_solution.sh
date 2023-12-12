@@ -41,11 +41,19 @@ if [ -n "$NEW_SERVICE_ACCOUNT" ]; then
 fi
 
 echo "Assigning required roles to the service account ${SERVICE_ACCOUNT}"
+CURRENT_POLICY=$(gcloud projects get-iam-policy ${PROJECT_ID} --format=json)
+MEMBER="serviceAccount:${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com"
+
 while IFS= read -r role || [[ -n "$role" ]]
 do \
-gcloud projects add-iam-policy-binding ${PROJECT_ID} \
-  --member="serviceAccount:${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com" \
-  --role="$role"
+if echo "$CURRENT_POLICY" | jq -e --arg role "$role" --arg member "$MEMBER" '.bindings[] | select(.role == $role) | .members[] | select(. == $member)' > /dev/null; then \
+    echo "IAM policy binding already exists for member ${MEMBER} and role ${role}"
+else \
+    gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member="$MEMBER" \
+    --role="$role" \
+    --condition=None
+fi
 done < "roles.txt"
 
 cat <<EOF > input.tfvars

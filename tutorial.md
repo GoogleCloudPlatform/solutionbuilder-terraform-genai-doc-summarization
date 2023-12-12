@@ -98,11 +98,18 @@ You can also set it to any existing service account.
 ---
 **Assign the required roles to the service account**
 ```bash
+CURRENT_POLICY=$(gcloud projects get-iam-policy <var>PROJECT_ID</var> --format=json)
+MEMBER="serviceAccount:<var>SERVICE_ACCOUNT</var>@<var>PROJECT_ID</var>.iam.gserviceaccount.com"
 while IFS= read -r role || [[ -n "$role" ]]
 do \
-gcloud projects add-iam-policy-binding <var>PROJECT_ID</var> \
-  --member="serviceAccount:<var>SERVICE_ACCOUNT</var>@<var>PROJECT_ID</var>.iam.gserviceaccount.com" \
-  --role="$role"
+if echo "$CURRENT_POLICY" | jq -e --arg role "$role" --arg member "$MEMBER" '.bindings[] | select(.role == $role) | .members[] | select(. == $member)' > /dev/null; then \
+    echo "IAM policy binding already exists for member ${MEMBER} and role ${role}"
+else \
+    gcloud projects add-iam-policy-binding <var>PROJECT_ID</var> \
+    --member="$MEMBER" \
+    --role="$role" \
+    --condition=None
+fi
 done < "roles.txt"
 ```
 
