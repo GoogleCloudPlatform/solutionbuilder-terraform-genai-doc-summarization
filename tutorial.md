@@ -32,11 +32,10 @@ Open the directory where the repository is cloned as a workspace in the editor, 
 ## Before you begin
 
 Before editing the solution, you should be aware of the following information:
-
 * Cloud Functions webhook is present under `./webhook` directory. The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="81" endLine="82" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
 * Terraform / infrastructure code is available in the `*.tf` files.
 
-We also strongly recommend that you familiarize yourself with the three-tier web app solution by reading the [solution guide](https://cloud.google.com/architecture/application-development/generative-ai-document-summarization).
+We also strongly recommend that you familiarize yourself with the three-tier web app solution by reading the [solution guide](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization).
 
 ## Edit the solution
 
