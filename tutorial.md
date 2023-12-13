@@ -35,7 +35,7 @@ Before editing the solution, you should be aware of the following information:
 * Cloud Functions webhook is present under `./webhook` directory. The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="81" endLine="82" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
 * Terraform / infrastructure code is available in the `*.tf` files.
 
-We also strongly recommend that you familiarize yourself with the three-tier web app solution by reading the [solution guide](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization).
+We also strongly recommend that you familiarize yourself with the Generative AI Document Summarization solution by reading the [solution guide](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization).
 
 ## Edit the solution
 
@@ -109,7 +109,7 @@ gcloud infra-manager deployments describe <var>DEPLOYMENT_NAME</var> --location 
 ```
 From the output, note down the following:
 * The values of the existing deployment available in the `terraformBlueprint.inputValues` section.
-* The service account. It is of the following form:
+* The service account has the following format:
 
 ```
 projects/<var>PROJECT_ID</var>/serviceAccounts/<service-account>@<var>PROJECT_ID</var>.iam.gserviceaccount.com
@@ -139,7 +139,7 @@ done < "roles.txt"
 ```
 
 ---
-**Create a terraform input file**
+**Create a Terraform input file**
 
 Create an `input.tfvars` file in the current directory with the following contents:
 
@@ -189,7 +189,7 @@ To download your solution, in the `File` menu, select `Download Workspace`. The 
 ---
 **Save the solution to your Git repository**
 
-Set the remote url to your Git repository
+Set the remote URL to your Git repository
 ```bash 
 git remote set-url origin [git-repo-url]
 ```
