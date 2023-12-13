@@ -7,15 +7,26 @@
 
 # Customize a Generative AI Document Summarization solution
 
-Learn how to build and deploy your own proof of concept based on the deployed [Generative AI Document Summarization](https://console.cloud.google.com/products/solutions/details/generative-ai-document-summarization) Jump Start Solution (JSS). You can customize the Jump Start Solution (JSS) deployment by creating a copy of the source code. You can modify the infrastructure and application code as needed and redeploy the solution with the changes.
+Learn how to build and deploy your own proof of concept based on the deployed [Generative AI Document Summarization](https://console.cloud.google.com/products/solutions/details/generative-ai-document-summarization) Jump Start Solution. You can customize the Jump Start Solution deployment by creating a copy of the source code. You can modify the infrastructure and application code as needed and redeploy the solution with the changes.
 
 To avoid conflicts, only one user should modify and deploy a solution in a single GCP project.
 
 ## Open cloned repository as workspace
 
-Open the directory where the repository is cloned as a workspace in the editor:
+Open the directory where the repository is cloned as a workspace in the editor, follow the steps based on whether you are using the Cloud Shell Editor in Preview Mode or Legacy Mode.
+
+---
+**Legacy Cloud Shell Editor**
+
 * Go to the `File` menu.
 * Select `Open Workspace`.
+* Choose the directory where the repository has been cloned. This directory is the current directory in the cloud shell terminal.
+
+**New Cloud Shell Editor**
+
+* Go the hamburger icon located in the top left corner of the editor.
+* Go to the `File` Menu.
+* Select `Open Folder`.
 * Choose the directory where the repository has been cloned. This directory is the current directory in the cloud shell terminal.
 
 ## Details of your chosen Generative AI Document Summarization Jump Start Solution
@@ -34,7 +45,7 @@ NOTE: A change in the infrastructure code might cause a reduction or increase in
 ---
 **Create an automated deployment**
 
-(Optional step) If you want to learn individual steps involved in the script, you can skip this step and continue with the rest of the tutorial. However, if you want an automated deployment without following the full tutorial, run the <walkthrough-editor-open-file filePath="./deploy_solution.sh">deploy_solution.sh</walkthrough-editor-open-file> script.
+Optional: If you want to learn individual steps involved in the script, you can skip this step and continue with the rest of the tutorial. However, if you want an automated deployment without following the full tutorial, run the <walkthrough-editor-open-file filePath="./deploy_solution.sh">deploy_solution.sh</walkthrough-editor-open-file> script.
 
 ```bash
 ./deploy_solution.sh
@@ -73,6 +84,19 @@ gcloud infra-manager deployments list --location <var>REGION</var> --filter="lab
 Use the output value of name to set the <var>DEPLOYMENT_NAME</var>
 ```
 
+---
+
+**Create the cloud storage bucket if it does not exist already**
+
+Verify if the Cloud Storage bucket exists
+```bash
+gsutil ls gs://<var>PROJECT_ID</var>_infra_manager_staging
+```
+
+If the command returns an error indicating a non-existing bucket, create the bucket by running below command. Otherwise move on to the next step.
+```bash
+gsutil mb gs://<var>PROJECT_ID</var>_infra_manager_staging/
+```
 
 ## Deploy the solution
 
@@ -149,7 +173,7 @@ Get the deployment details.
 gcloud infra-manager deployments describe <var>DEPLOYMENT_NAME</var> --location <var>REGION</var>
 ```
 
-Monitor your deployment at [JSS deployment page](https://console.cloud.google.com/products/solutions/deployments?pageState=(%22deployments%22:(%22f%22:%22%255B%257B_22k_22_3A_22Labels_22_2C_22t_22_3A13_2C_22v_22_3A_22_5C_22modification-reason%2520_3A%2520make-it-mine_5C_22_22_2C_22s_22_3Atrue_2C_22i_22_3A_22deployment.labels_22%257D%255D%22))).
+Monitor your deployment at [Solution deployments page](https://console.cloud.google.com/products/solutions/deployments?pageState=(%22deployments%22:(%22f%22:%22%255B%257B_22k_22_3A_22Labels_22_2C_22t_22_3A13_2C_22v_22_3A_22_5C_22modification-reason%2520_3A%2520make-it-mine_5C_22_22_2C_22s_22_3Atrue_2C_22i_22_3A_22deployment.labels_22%257D%255D%22))).
 
 ## Save your edits to the solution
 
@@ -170,4 +194,12 @@ git remote set-url origin [git-repo-url]
 ```
 
 Review the modified files, commit and push to your remote repository branch.
+
+## Delete the deployed solution
+
+Optional: Use one of the below options in case you want to delete the deployed solution
+
+* Go to [Solution deployments page](https://console.cloud.google.com/products/solutions/deployments?pageState=(%22deployments%22:(%22f%22:%22%255B%257B_22k_22_3A_22Labels_22_2C_22t_22_3A13_2C_22v_22_3A_22_5C_22modification-reason%2520_3A%2520make-it-mine_5C_22_22_2C_22s_22_3Atrue_2C_22i_22_3A_22deployment.labels_22%257D%255D%22))).
+* Click on the link under "Deployment name". It will take you to the deployment details page for the solution.
+* Click on the "DELETE" button on the top left corner of the page
 <walkthrough-inline-feedback></walkthrough-inline-feedback>
