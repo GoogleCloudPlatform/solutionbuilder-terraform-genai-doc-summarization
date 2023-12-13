@@ -9,7 +9,7 @@
 
 Learn how to build and deploy your own proof of concept based on the deployed [Generative AI Document Summarization](https://console.cloud.google.com/products/solutions/details/generative-ai-document-summarization) Jump Start Solution. You can customize the Jump Start Solution deployment by creating a copy of the source code. You can modify the infrastructure and application code as needed and redeploy the solution with the changes.
 
-To avoid conflicts, only one user should modify and deploy a solution in a single GCP project.
+To avoid conflicts, only one user should modify and deploy a solution in a single Google Cloud project.
 
 ## Open cloned repository as workspace
 
@@ -18,27 +18,29 @@ Open the directory where the repository is cloned as a workspace in the editor, 
 ---
 **Legacy Cloud Shell Editor**
 
-* Go to the `File` menu.
-* Select `Open Workspace`.
-* Choose the directory where the repository has been cloned. This directory is the current directory in the cloud shell terminal.
+1. Go to the `File` menu.
+2. Select `Open Workspace`.
+3. Choose the directory where the repository has been cloned. This directory is the current directory in the cloud shell terminal.
 
 **New Cloud Shell Editor**
 
-* Go the hamburger icon located in the top left corner of the editor.
-* Go to the `File` Menu.
-* Select `Open Folder`.
-* Choose the directory where the repository has been cloned. This directory is the current directory in the cloud shell terminal.
+1. Go the hamburger icon located in the top left corner of the editor.
+2. Go to the `File` Menu.
+3. Select `Open Folder`.
+4. Choose the directory where the repository has been cloned. This directory is the current directory in the cloud shell terminal.
 
-## Details of your chosen Generative AI Document Summarization Jump Start Solution
+## Before you begin
 
-* [Solution guide](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization)
-* The Cloud Functions webhook is present under `./webhook` directory. The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="81" endLine="82" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
+Before editing the solution, you should be aware of the following information:
+
+* Cloud Functions webhook is present under `./webhook` directory. The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="81" endLine="82" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
 * Terraform / infrastructure code is available in the `*.tf` files.
 
+We also strongly recommend that you familiarize yourself with the three-tier web app solution by reading the [solution guide](https://cloud.google.com/architecture/application-development/generative-ai-document-summarization).
 
 ## Edit the solution
 
-Edit <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="164" endLine="165" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> and replace the value of `temperature` parameter to `0.9`. Increasing the temperature parameter leads to more diverse responses from the model.
+For example, edit <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="164" endLine="165" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> and replace the value of `temperature` parameter to `0.9`. Increasing the temperature parameter leads to more diverse responses from the model.
 
 NOTE: A change in the infrastructure code might cause a reduction or increase in the incurred cost.
 
@@ -51,7 +53,7 @@ Optional: If you want to learn individual steps involved in the script, you can 
 ./deploy_solution.sh
 ```
 
-## Gather information to initialize the gcloud command
+## Gather information to initialize the deployment environment
 
 ---
 **Project ID**
