@@ -33,7 +33,7 @@ echo "Deployment name is ${DEPLOYMENT_NAME}"
 
 SERVICE_ACCOUNT=$(gcloud infra-manager deployments describe ${DEPLOYMENT_NAME} --location ${REGION} | sed -n 's/serviceAccount:.*\/\(.*\)@.*/\1/p')
 
-echo -n "The deployment currently uses ${SERVICE_ACCOUNT} service account. If you want to use any other service account, please specify the name. Else, press enter to skip: "
+echo -n "The deployment currently uses ${SERVICE_ACCOUNT} service account. If you want to use any other service account, please specify the name. Else, press enter to use the current service account: "
 read NEW_SERVICE_ACCOUNT
 
 if [ -n "$NEW_SERVICE_ACCOUNT" ]; then
@@ -75,6 +75,15 @@ EOF
 
 echo "An input.tfvars has been created in the current directory with a set of sample input terraform variables for the solution. You can modify their values."
 read -p "Once done, press Enter to continue: "
+
+echo "Creating the cloud storage bucket if it does not exist already"
+BUCKET_NAME="${PROJECT_ID}_infra_manager_staging"
+if ! gsutil ls "gs://$BUCKET_NAME" &> /dev/null; then
+    gsutil mb "gs://$BUCKET_NAME/"
+    echo "Bucket $BUCKET_NAME created successfully."
+else
+    echo "Bucket $BUCKET_NAME already exists. Moving on to the next step."
+fi
 
 echo "Deploying the solution"
 gcloud infra-manager deployments apply projects/${PROJECT_ID}/locations/${REGION}/deployments/${DEPLOYMENT_NAME} --service-account projects/${PROJECT_ID}/serviceAccounts/${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com --local-source="."     --inputs-file=./input.tfvars --labels="modification-reason=make-it-mine,goog-solutions-console-deployment-name=${DEPLOYMENT_NAME},goog-solutions-console-solution-id=generative-ai-document-summarization,goog-config-partner=sc"
