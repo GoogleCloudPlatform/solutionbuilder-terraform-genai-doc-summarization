@@ -141,10 +141,16 @@ done < "roles.txt"
 ---
 **Create a Terraform input file**
 
-Create an `input.tfvars` file in the current directory with the following contents:
+Get the existing region being used for terraform resources.
+
+```bash
+echo $(gcloud infra-manager deployments describe <var>DEPLOYMENT_NAME</var> --location <var>REGION</var> --format json) | jq -r '.terraformBlueprint.inputValues.region.inputValue'
+```
+
+Create an `input.tfvars` file in the current directory with the following contents. Update the region fetched above in the `TF_REGION` variable:
 
 ```
-region="us-central1"
+region="<var>TF_REGION</var>"
 project_id = "<var>PROJECT_ID</var>"
 bucket_name="genai-webhook"
 webhook_name="webhook"
