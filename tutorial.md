@@ -209,4 +209,4 @@ Optional: Use one of the below options in case you want to delete the deployed s
 * Go to [Solution deployments page](https://console.cloud.google.com/products/solutions/deployments?pageState=(%22deployments%22:(%22f%22:%22%255B%257B_22k_22_3A_22Labels_22_2C_22t_22_3A13_2C_22v_22_3A_22_5C_22modification-reason%2520_3A%2520make-it-mine_5C_22_22_2C_22s_22_3Atrue_2C_22i_22_3A_22deployment.labels_22%257D%255D%22))).
 * Click on the link under "Deployment name". It will take you to the deployment details page for the solution.
 * Click on the "DELETE" button located at the top right corner of the page.
-  <walkthrough-inline-feedback></walkthrough-inline-feedback>
+<walkthrough-inline-feedback></walkthrough-inline-feedback>
