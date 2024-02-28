@@ -36,8 +36,8 @@ IM_SUPPORTED_REGIONS=("us-central1" "europe-west1" "asia-east1")
 for REGION in "${IM_SUPPORTED_REGIONS[@]}"; do
     DEPLOYMENT_NAME=$(gcloud infra-manager deployments list --location "${REGION}" \
                         --filter="labels.goog-solutions-console-deployment-name:* AND \
-                        labels.goog-solutions-console-solution-id:three-tier-web-app" \
-                        --format='value(name)' )
+                        labels.goog-solutions-console-solution-id:generative-ai-document-summarization" \
+                        --format='value(name)')
     if [ -n "$DEPLOYMENT_NAME" ]; then
         break
     fi
