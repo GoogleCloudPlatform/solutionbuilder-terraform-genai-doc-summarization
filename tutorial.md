@@ -91,12 +91,12 @@ Use the output value of name to set the <var>DEPLOYMENT_NAME</var>
 
 Verify if the Cloud Storage bucket exists
 ```bash
-gsutil ls gs://<var>PROJECT_ID</var>_infra_manager_staging
+gcloud storage ls gs://<var>PROJECT_ID</var>_infra_manager_staging
 ```
 
 If the command returns an error indicating a non-existing bucket, create the bucket by running below command. Otherwise move on to the next step.
 ```bash
-gsutil mb gs://<var>PROJECT_ID</var>_infra_manager_staging/
+gcloud storage buckets create gs://<var>PROJECT_ID</var>_infra_manager_staging/
 ```
 
 ## Deploy the solution
