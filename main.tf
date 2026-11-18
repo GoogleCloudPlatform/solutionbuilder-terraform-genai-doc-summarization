@@ -106,11 +106,26 @@ resource "google_project_iam_member" "webhook_sa_roles" {
   for_each = toset([
     "roles/run.invoker",
     "roles/cloudfunctions.invoker",
-    "roles/storage.admin",
     "roles/logging.logWriter",
     "roles/artifactregistry.reader",
     "roles/bigquery.dataEditor",
     "roles/aiplatform.user",
+  ])
+  role   = each.key
+  member = "serviceAccount:${google_service_account.webhook.email}"
+}
+
+resource "google_storage_bucket_iam_member" "webhook_uploads_viewer" {
+  bucket = google_storage_bucket.uploads.name
+  role   = "roles/storage.objectViewer"
+  member = "serviceAccount:${google_service_account.webhook.email}"
+}
+
+resource "google_storage_bucket_iam_member" "webhook_output_roles" {
+  bucket = google_storage_bucket.output.name
+  for_each = toset([
+    "roles/storage.objectAdmin",
+    "roles/storage.legacyBucketReader",
   ])
   role   = each.key
   member = "serviceAccount:${google_service_account.webhook.email}"
@@ -143,6 +158,7 @@ resource "google_cloudfunctions2_function" "webhook" {
     environment_variables = {
       PROJECT_ID    = var.project_id
       LOCATION      = var.region
+      INPUT_BUCKET  = google_storage_bucket.uploads.name
       OUTPUT_BUCKET = google_storage_bucket.output.name
       DATASET_ID    = google_bigquery_dataset.default.dataset_id
       TABLE_ID      = google_bigquery_table.default.table_id
@@ -152,7 +168,8 @@ resource "google_cloudfunctions2_function" "webhook" {
     module.project_services,
     time_sleep.wait_for_apis,
     google_project_iam_member.webhook_sa_roles,
-
+    google_storage_bucket_iam_member.webhook_uploads_viewer,
+    google_storage_bucket_iam_member.webhook_output_roles,
   ]
 }
 

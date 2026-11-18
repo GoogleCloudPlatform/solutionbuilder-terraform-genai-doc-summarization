@@ -30,6 +30,7 @@ from utils import coerce_datetime_zulu, truncate_complete_text
 _FUNCTIONS_VERTEX_EVENT_LOGGER = 'summarization-by-llm'
 
 _PROJECT_ID = os.environ["PROJECT_ID"]
+_INPUT_BUCKET = os.environ.get("INPUT_BUCKET", f"{_PROJECT_ID}_uploads")
 _OUTPUT_BUCKET = os.environ["OUTPUT_BUCKET"]
 _LOCATION = os.environ["LOCATION"]
 _MODEL_NAME = "text-bison@001"
@@ -59,7 +60,7 @@ def redirect_and_reply(previous_data):
     data = {
         'name': previous_data["name"],
         'id': previous_data["id"],
-        'bucket': previous_data["bucket"],
+        'bucket': _INPUT_BUCKET,
         'timeCreated': previous_data["timeCreated"],
     }
     headers = {}
@@ -81,16 +82,22 @@ def redirect_and_reply(previous_data):
 
 def entrypoint(request: object) -> Mapping[str, str]:
     data = request.get_json()
+    if not isinstance(data, Mapping):
+        return flask.Response("Invalid JSON request body", status=400)
     if data.get("kind", None) == "storage#object":
+        if data.get("bucket") != _INPUT_BUCKET:
+            return flask.Response("Forbidden: unexpected source bucket", status=403)
         # Entrypoint called by Pub-Sub (Eventarc)
         return redirect_and_reply(data)
 
     if 'bucket' in data:
+        if data.get("bucket") != _INPUT_BUCKET:
+            return flask.Response("Forbidden: unexpected source bucket", status=403)
         # Entrypoint called by REST (possibly by redirect_and_replay)
         return cloud_event_entrypoint(
             name=data["name"],
             event_id=data["id"],
-            bucket=data["bucket"],
+            bucket=_INPUT_BUCKET,
             time_created=coerce_datetime_zulu(data["timeCreated"]),
         )
 
