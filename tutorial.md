@@ -32,14 +32,14 @@ Open the directory where the repository is cloned as a workspace in the editor, 
 ## Before you begin
 
 Before editing the solution, you should be aware of the following information:
-* Cloud Functions webhook is present under `./webhook` directory. The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="81" endLine="82" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
+* Cloud Functions webhook is present under `./webhook` directory. The `entrypoint` function in the <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="82" endLine="83" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> gets triggered when we send a document summarization request. This function is event driven and is called using Cloud Functions.
 * Terraform / infrastructure code is available in the `*.tf` files.
 
 We also strongly recommend that you familiarize yourself with the Generative AI Document Summarization solution by reading the [solution guide](https://cloud.google.com/architecture/ai-ml/generative-ai-document-summarization).
 
 ## Edit the solution
 
-For example, edit <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="164" endLine="165" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> and replace the value of `temperature` parameter to `0.9`. Increasing the temperature parameter leads to more diverse responses from the model.
+For example, edit <walkthrough-editor-select-line filePath="./webhook/main.py" startLine="171" endLine="172" startCharacterOffset="0" endCharacterOffset="0">./webhook/main.py</walkthrough-editor-select-line> and replace the value of `temperature` parameter to `0.9`. Increasing the temperature parameter leads to more diverse responses from the model.
 
 NOTE: A change in the infrastructure code might cause a reduction or increase in the incurred cost.
 
